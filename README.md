@@ -54,6 +54,20 @@ Cyber Lab/
 
 ---
 
+## ⏳ Lab Roadmap & Upcoming Updates
+> **Status:** 🔄 *Cycle 1 Complete. Subsequent weeks are currently in progress.*
+
+The following modules will be uploaded progressively in accordance with the lab schedule:
+
+- [x] **Week 1 to 6:** Cycle 1 Core Programs (Cryptography, Static Analysis, Threat Intel)
+- [ ] **Week 7 & 8:** Coming Soon (Dynamic Malware Analysis / Network Sniffing Basics)
+- [ ] **Week 9 & 10:** Coming Soon (Web Application Vulnerability Scanning / SQLi Basics)
+- [ ] **Week 11 & 12:** Coming Soon (Digital Forensics / Final Lab Record Compilation)
+
+*New directories and source files will be pushed to the `main` branch weekly as they are verified.*
+
+---
+
 ## 🛠️ Getting Started
 
 ### Prerequisites
