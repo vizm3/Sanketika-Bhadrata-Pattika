@@ -1,0 +1,7 @@
+This is a normal text file.
+
+Welcome to the Cyber Security Lab.
+
+Today we are learning static malware analysis.
+
+Python is easy to learn.
