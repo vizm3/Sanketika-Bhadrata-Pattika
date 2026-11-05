@@ -19,11 +19,15 @@ def check_spam(filename):
     with open(filename, "r", encoding="utf-8") as f:
         email_body = f.read().lower()
     
+    found = []
     for keyword in spam_keywords:
         if keyword in email_body:
-            print("Spam detected")
-            return
-    print("Not spam")
+            found.append(keyword)
+    if found:
+        print("Spam detected")
+        print("Found keywords:", found)
+    else:
+        print("Not spam")
 
 # Run the check on saved file
 name = input("Enter the filename: ")
