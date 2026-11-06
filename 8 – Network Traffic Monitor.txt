@@ -1,0 +1,102 @@
+# WEEK 08 – Network Traffic Monitoring using Wireshark and Netcat
+
+Aim: To monitor network traffic and observe data transferred in client-server communication using TCP/UDP and identify their datagrams.
+
+Introduction:
+
+Wireshark is a network traffic monitoring tool used to capture and analyze packets. Netcat (`nc`) is used to establish client-server communication and transfer messages.
+
+## Step 1: Start Netcat Server
+
+Command:
+
+```
+nc -lvnp 4444
+```
+
+Explanation: Starts Netcat in listening mode on port 4444 and waits for incoming client connections.
+
+Example Output:
+
+```
+Listening on 0.0.0.0 4444
+Connection received from 10.30.5.203
+```
+
+## Step 2: Connect Netcat Client
+
+Command:
+
+```
+nc 10.30.5.203 4444
+```
+
+Explanation: Connects the client to the server at IP `10.30.5.203` through TCP port 4444. Messages typed by the client are displayed on the server.
+
+Example Output:
+
+```
+hii
+hello
+cysec
+```
+
+## Step 3: Capture Network Traffic using Wireshark
+
+Open Wireshark and select the network interface through which communication is taking place. Start packet capture.
+
+Display Filter:
+
+```
+ip.addr == 10.30.5.203
+```
+
+Alternatively, filter by port:
+
+```
+tcp.port == 4444
+```
+
+Explanation: Captures and displays packets exchanged between the client and server.
+
+Example Output:
+
+```
+TCP 10.30.5.130 → 10.30.5.203
+TCP 10.30.5.203 → 10.30.5.130
+```
+
+## Step 4: Identify TCP Header and Flags
+
+Select a captured TCP packet and expand the Transmission Control Protocol section.
+
+Explanation: Observe the source port, destination port, sequence numbers, acknowledgment numbers and TCP control flags.
+
+The TCP three-way handshake consists of SYN → SYN-ACK → ACK.
+
+Example Output:
+
+```
+Source Port: 51608
+Destination Port: 4444
+Flags: SYN
+```
+
+## Step 5: Inspect Packet Payload
+
+Select a packet containing transferred message data and examine the packet bytes in the bottom pane.
+
+Explanation: Wireshark displays the packet contents in hexadecimal and ASCII formats, allowing us to observe the transferred plaintext messages.
+
+Example Output:
+
+```
+Hex: 68 69 69
+ASCII: hii
+```
+
+## Result
+
+Thus, client-server communication was established using Netcat, and network traffic was captured and analyzed using Wireshark. TCP packets, control flags, sequence numbers and transferred payload data were successfully observed.
+
+Note: The manual demonstrates TCP communication on port 4444. It does not include a separate UDP execution procedure; its documented packet analysis focuses on TCP.

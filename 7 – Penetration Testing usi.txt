@@ -1,0 +1,131 @@
+# WEEK 07 – Penetration Testing using Nmap Tool
+
+Aim: To demonstrate penetration testing tasks like port scanning, host discovery, service detection and vulnerability scanning using Nmap.
+
+Introduction:
+
+Nmap (Network Mapper) is a network scanning tool used to discover active hosts, identify open ports, detect running services and their versions, and identify potential security vulnerabilities. It helps security professionals understand the network and assess its security.
+
+## Step 1: Network Host Discovery (Ping Sweep)
+
+Command:
+
+```
+sudo nmap -sn 10.30.0.0/24
+```
+
+Explanation:
+
+- `sudo` – Executes the command with administrator privileges.
+- `nmap` – Starts the Nmap tool.
+- `-sn` – Discovers active hosts without scanning ports.
+- `10.30.0.0/24` – Specifies the network range to scan.
+
+This command identifies all active devices connected to the specified network.
+
+Example Output:
+
+```
+Nmap scan report for 10.30.0.1
+Host is up (0.002s latency).
+```
+
+## Step 2: Targeted Port Scanning on Local Host
+
+Command:
+
+```
+nmap -p 22,80,443,8080 127.0.0.1
+```
+
+Explanation:
+
+- `-p` – Specifies the ports to scan.
+- `22` – SSH, `80` – HTTP, `443` – HTTPS, `8080` – Alternative HTTP.
+- `127.0.0.1` – Refers to the local machine (localhost).
+
+This command checks whether the selected ports are open or closed on the local machine.
+
+Example Output:
+
+```
+PORT     STATE    SERVICE
+22/tcp   closed   ssh
+80/tcp   closed   http
+```
+
+## Step 3: Targeted Port Scanning on Remote Host
+
+Command:
+
+```
+nmap -p 22,80,443,8080 10.30.5.203
+```
+
+Explanation:
+
+This command scans specific ports on a remote machine in the network. It identifies whether services such as SSH, HTTP and HTTPS are accessible on the target system.
+
+Replace the IP address with your target machine's IP when performing the lab.
+
+Example Output:
+
+```
+PORT     STATE    SERVICE
+22/tcp   closed   ssh
+80/tcp   closed   http
+```
+
+## Step 4: Service Version and OS Detection
+
+Command:
+
+```
+sudo nmap -sV -O scanme.nmap.org
+```
+
+Explanation:
+
+- `-sV` – Detects the versions of running services.
+- `-O` – Identifies the target operating system.
+- `scanme.nmap.org` – Public test server provided by Nmap for scanning practice.
+
+This command identifies running services, their software versions and the operating system of the target.
+
+Example Output:
+
+```
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 6.6.1p1
+80/tcp open  http    Apache httpd 2.4.7
+```
+
+## Step 5: Vulnerability Scanning (Additional)
+
+Command:
+
+```
+sudo nmap -sV --script vuln <target-IP>
+```
+
+Explanation:
+
+- `-sV` – Detects service versions.
+- `--script vuln` – Executes Nmap vulnerability detection scripts.
+- `<target-IP>` – Specifies the target machine's IP address.
+
+This command checks the target for potential known vulnerabilities in its running services.
+
+Example Output:
+
+```
+PORT   STATE SERVICE
+80/tcp open  http
+|_http-csrf: No CSRF vulnerability found.
+```
+
+Note: This is an illustrative output. Actual results depend on the target and the scripts that apply. Run only against authorized lab systems.
+
+## Result
+
+Thus, penetration testing tasks such as host discovery, port scanning, service version detection, OS fingerprinting and vulnerability scanning were demonstrated successfully using the Nmap tool.
