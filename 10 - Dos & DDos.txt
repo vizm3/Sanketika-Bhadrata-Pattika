@@ -1,0 +1,75 @@
+Run these in Kali first:
+sudo apt update
+sudo apt install apache2-utils
+
+Step 2: Setup server in ubuntu
+Create a Folder and a python file in ubuntu and paste this code as it is there
+Run this first: python3 -m http.server 8000 --bind 0.0.0.0
+this creates a temp server with threshold limit
+
+Step 3:
+Verify server connectivity
+curl http://uduntu ip:8000/
+
+send requests
+ab -n 20 -c 2 http://ubuntu ip:8000/
+
+verify server recovery
+curl http://uduntu ip:8000/
+
+for DDos: Open another "U B U N T U    t e r m i n a l" and run these for curl installation:
+sudo apt update && sudo apt install curl -y
+sudo apt install apache2-utils
+
+Verify server connectivity
+curl http://127.0.0.1:8000/
+send requests
+ab -n 20 -c 2 http://127.0.0.1:8000/
+
+
+----------------Server Python Code---------------------
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from threading import BoundedSemaphore
+import time
+
+# Allow only 2 requests to be processed simultaneously
+capacity = BoundedSemaphore(3)
+
+
+class LimitedServer(BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        if not capacity.acquire(blocking=False):
+            self.send_response(503)
+            self.end_headers()
+            self.wfile.write(b"Server overloaded! Try again later.")
+            print("Request rejected: Server capacity exceeded")
+            return
+
+        try:
+            print("Request accepted:", self.client_address[0])
+
+            # Simulate slow request processing
+            time.sleep(2)
+
+            message = b"Request processed successfully"
+
+            self.send_response(200)
+            self.send_header("Content-Length", str(len(message)))
+            self.end_headers()
+            self.wfile.write(message)
+
+        finally:
+            capacity.release()
+
+
+class Server(ThreadingHTTPServer):
+    request_queue_size = 50
+
+
+server = Server(("0.0.0.0", 8000), LimitedServer)
+
+print("Limited-capacity server running on port 8000")
+print("Maximum simultaneous requests: 2")
+
+server.serve_forever()
